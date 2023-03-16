@@ -1,13 +1,24 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Button, Card } from "react-bootstrap"
-
-import products from '../products'
 import Rating from '../components/Rating';
 
-const ProductScreen = ({ match }) => {
-  const product_id = useParams();
-  const product = products.find(p => p._id === product_id.id)
+import axios from 'axios';
+
+const ProductScreen = () => {
+  const[product, setProduct] = useState({});
+  const product_id = useParams().id;
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      // dodać do package.json ->  "proxy": "http://127.0.0.1:8000"
+      const {data} = await axios.get(`/api/products/${product_id}`)
+      setProduct(data);
+    }
+
+    fetchProduct();
+  }, [])
+  // const product = products.find(p => p._id === product_id.id)
   return (
     <div>
       <Link to='/' className='btn btn-secondary my-3'>Go Back</Link>

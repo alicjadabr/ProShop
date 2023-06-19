@@ -1,20 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
-
-import { listProducts } from "../actions/productActions";
-import Product from "../components/Product";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
+import { listProducts } from '../actions/productActions'
+import { Product, Loader, Message } from '../components'
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const productList = useSelector(state => state.productList);
-  const { error, loading, products } = productList;
+  const dispatch = useDispatch()
+  const productList = useSelector(state => state.productList)
+  const { error, loading, products } = productList
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts())
+  }, [dispatch])
 
   return (
     <div>
@@ -31,7 +28,7 @@ const HomeScreen = () => {
         </Row>
       }
     </div>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

@@ -1,32 +1,32 @@
-import { useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { Form, Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
-import { savePaymentMethod } from '../actions/cartActions';
-import CheckoutSteps from '../components/CheckoutSteps';
+import { savePaymentMethod } from '../actions/cartActions'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 const PaymentScreen = () => {
-  const cart = useSelector(state => state.cart);
-  const { shippingAddress } = cart;
+  const cart = useSelector(state => state.cart)
+  const { shippingAddress } = cart
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [next, setNext] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [next, setNext] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
   if(!shippingAddress.address) {
-    return <Navigate replace to="/shipping" />;
+    return <Navigate replace to='/shipping' />
   }
 
   const submitHandler = e => {
-    e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    setNext(prev => !prev);
+    e.preventDefault()
+    dispatch(savePaymentMethod(paymentMethod))
+    setNext(prev => !prev)
   }
 
   if(next) {
-    return <Navigate replace to="/placeorder" />;
+    return <Navigate replace to='/placeorder' />
   }
 
   return (

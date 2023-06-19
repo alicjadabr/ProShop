@@ -1,33 +1,31 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../components/Loader'
-import Message from '../components/Message'
-import FormContainer from '../components/FormContainer'
+import { Loader, Message, FormContainer } from '../components'
 import { register } from '../actions/userActions'
 
 const RegisterScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [message, setMessage] = useState('')
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const location = useLocation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const redirect = location.state ? Number(location.state) : '/';
-  const userRegister = useSelector(state => state.userRegister);
+  const redirect = location.state ? Number(location.state) : '/'
+  const userRegister = useSelector(state => state.userRegister)
 
-  const { error, loading, userInfo } = userRegister;
+  const { error, loading, userInfo } = userRegister
 
   useEffect(() => {
     if(userInfo) {
-      navigate(redirect);
+      navigate(redirect)
     }
-  }, [navigate, userInfo, redirect]);
+  }, [navigate, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -37,7 +35,7 @@ const RegisterScreen = () => {
     } else {
       dispatch(register(name, email, password))
     }
-  };
+  }
 
   return (
     <FormContainer>

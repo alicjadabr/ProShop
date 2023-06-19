@@ -1,34 +1,32 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector} from 'react-redux';
-import FormContainer from '../components/FormContainer';
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import { login } from "../actions/userActions"
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Form, Button, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector} from 'react-redux'
+import { Loader, Message, FormContainer } from '../components'
+import { login } from '../actions/userActions'
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const location = useLocation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const redirect = location.state ? Number(location.state) : '/';
-  const userLogin = useSelector(state => state.userLogin);
-  const { error, loading, userInfo } = userLogin;
+  const redirect = location.state ? Number(location.state) : '/'
+  const userLogin = useSelector(state => state.userLogin)
+  const { error, loading, userInfo } = userLogin
 
   useEffect(() => {
     if(userInfo) {
-      navigate(redirect);
+      navigate(redirect)
     }
-  }, [navigate, userInfo, redirect]);
+  }, [navigate, userInfo, redirect])
 
   const submitHandler = e => {
-    e.preventDefault();
-    dispatch(login(email, password));
-  };
+    e.preventDefault()
+    dispatch(login(email, password))
+  }
   
   return (
     <FormContainer>
@@ -71,4 +69,4 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen;
+export default LoginScreen

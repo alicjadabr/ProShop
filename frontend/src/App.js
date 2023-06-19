@@ -1,22 +1,19 @@
+import React from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-import Header from './components/Header'
-import Footer from './components/Footer'
-
+import { Header, Footer } from './components'
 import {
   CartScreen,
   HomeScreen,
   LoginScreen,
+  OrderScreen,
   PaymentScreen,
   PlaceOrderScreen,
   ProductScreen,
   ProfileScreen,
   RegisterScreen,
   ShippingScreen
-} 
-from './screens'
-
+} from './screens'
 
 const App = () => {
   return (
@@ -36,6 +33,7 @@ const App = () => {
             <Route path='/shipping' element={<ShippingScreen />}/>
             <Route path='/payment' element={<PaymentScreen />}/>
             <Route path='/placeorder' element={<PlaceOrderScreen />}/>
+            <Route path='/order/:id' element={<OrderScreen />}/>
           </Routes>
         </Container>
       </main>

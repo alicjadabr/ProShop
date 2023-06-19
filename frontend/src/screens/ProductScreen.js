@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image, ListGroup, Button, Card, Form } from "react-bootstrap"
-import { listProductDetails } from "../actions/productActions"
-import Rating from '../components/Rating';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
+import { listProductDetails } from '../actions/productActions'
+import { Rating, Loader, Message } from '../components'
 
-const ProductScreen = ({history}) => {
-  const [qty, setQty] = useState(1);
+const ProductScreen = () => {
+  const [qty, setQty] = useState(1)
 
-  const product_id = useParams().id;
-  let navigate = useNavigate();
+  const product_id = useParams().id
+  let navigate = useNavigate()
 
-  const dispatch = useDispatch();
-  const productDetails = useSelector(state => state.productDetails);
-  const { error, loading, product } = productDetails;
+  const dispatch = useDispatch()
+  const productDetails = useSelector(state => state.productDetails)
+  const { error, loading, product } = productDetails
 
   useEffect(() => {
-    dispatch(listProductDetails(product_id));
-    }, [dispatch ,product_id]);
+    dispatch(listProductDetails(product_id))
+    }, [dispatch, product_id])
 
   const addToCartHandler = () => {
-    navigate(`/cart/${product_id}?qty=${qty}`);
-  };
+    navigate(`/cart/${product_id}?qty=${qty}`)
+  }
 
   return (
     <div>

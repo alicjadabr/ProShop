@@ -10,6 +10,7 @@ import {
   PaymentScreen,
   PlaceOrderScreen,
   ProductScreen,
+  ProductListScreen,
   ProfileScreen,
   RegisterScreen,
   ShippingScreen,
@@ -39,6 +40,7 @@ const App = () => {
 
             <Route path='/admin/userList' element={<UserListScreen />}/>
             <Route path='/admin/user/:id/edit' element={<UserEditScreen />}/>
+            <Route path='/admin/productList' element={<ProductListScreen />}/>
           </Routes>
         </Container>
       </main>

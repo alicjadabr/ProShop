@@ -4,8 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader, Message } from '../components'
-import { listProducts, deleteProduct } from '../actions/productActions'
-import { createBootstrapComponent } from 'react-bootstrap/esm/ThemeProvider'
+import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const ProductListScreen = () => {
   const dispatch = useDispatch()
@@ -16,15 +16,26 @@ const ProductListScreen = () => {
     error: errorDelete, 
     success: successDelete 
   } = useSelector(state => state.productDelete)
+  const { 
+    loading: loadingCreate, 
+    error: errorCreate, 
+    success: successCreate,
+    product: createdProduct,
+  } = useSelector(state => state.productCreate)
   const { userInfo } = useSelector(state => state.userLogin)
 
   useEffect(() => {
-    if(userInfo && userInfo.isAdmin) {
-      dispatch(listProducts())
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET })
+    if(!userInfo.isAdmin) {
       navigate('/login')
+    } 
+
+    if(successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`)
+    } else {
+      dispatch(listProducts())
     }
-  }, [dispatch, navigate, userInfo, successDelete])
+  }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct])
 
   const deleteHandler = id => {
     if(window.confirm('Are you sure you want to delete this product?')) {
@@ -33,7 +44,7 @@ const ProductListScreen = () => {
   }
 
   const createProductHandler = () => {
-    // code
+    dispatch(createProduct())
   }
 
   return (
@@ -44,13 +55,15 @@ const ProductListScreen = () => {
         </Col>
 
         <Col className='text-end'>
-          <Button className='my-3' onClick={createProductHandler()}>
+          <Button className='my-3' onClick={createProductHandler}>
             <i className='fas fa-plus'></i> Create Product
           </Button>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       { loading ? (
         <Loader />
       ) : error ? (
